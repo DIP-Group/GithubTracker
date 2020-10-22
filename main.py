@@ -11,3 +11,5 @@ for repo in user.get_repos():
 
 repo = g.get_repo("PyGithub/PyGithub")
 print(repo.get_issue(number=874))
+
+print("Bunu ekledim")

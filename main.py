@@ -2,12 +2,15 @@ import base64
 from github import Github
 from pprint import pprint
 
-username = "socodes" #please type the user you want to take repositories'
-g = Github()
-user = g.get_user(username)
-for repo in user.get_repos():
-    print(repo)
-#-------------------------------------------
 
-repo = g.get_repo("PyGithub/PyGithub")
-print(repo.get_issue(number=874))
+g = Github()
+repo = g.get_repo("maidis/mythes-tr")
+open_issues = repo.get_issues(state='open')
+print("Opened ones:")
+for issue in open_issues:
+    print(issue.created_at)
+    
+close_issues = repo.get_issues(state='closed')
+print("Closed ones:")
+for issue in close_issues:
+    print(issue.created_at , " - ", issue.closed_at)

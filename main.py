@@ -11,4 +11,4 @@ for issue in open_issues:
 close_issues = repo.get_issues(state='closed')
 print("Closed ones:")
 for issue in close_issues:
-    print(issue, ":" ,issue.created_at , " - ", issue.closed_at)
+    print(issue.created_at , " - ", issue.closed_at)

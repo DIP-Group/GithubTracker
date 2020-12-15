@@ -2,7 +2,8 @@ from github import Github
 from datetime import datetime
 import matplotlib.pyplot as plt
 
-    
+#DENEME
+
 #creating a GitHub object
 github = Github()
 #repo = github.get_repo("maidis/mythes-tr")

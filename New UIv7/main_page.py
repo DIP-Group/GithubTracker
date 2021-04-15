@@ -244,7 +244,8 @@ class Ui_Dialog(object):
         #repo = github.get_repo("commaai/openpilot")
         repo = github.get_repo(self.url)
         return repo
-        
+
+
     def get_issue_metrics(self,repo,s_date,e_date):
         global open_issues
         global close_issues
@@ -453,7 +454,7 @@ class Ui_Dialog(object):
 
             
     #It checks repo labels generally, and then determines which labels are used opened and closed issues seperately.
-    def get_label(self,repo):
+    def get_label2(self,repo):
         labelName = []
         labelColor = []
         labelValuesOpened = []
@@ -473,26 +474,48 @@ class Ui_Dialog(object):
                 count = 0
                 count = labelColor.index(label.color)
                 labelValuesOpened[count] += 1
-
         count = 0
-        for member in labelValuesOpened:
-            if member != 0:
-                print("Between opened issues, {} ({}) label is used {} times.".format(labelName[count],labelColor[count],labelValuesOpened[count]))
-            count += 1
-
-
+        
         for issue in close_issues:
             open_labels = issue.get_labels()
             for label in open_labels:
                 count = 0
                 count = labelColor.index(label.color)
                 labelValuesClosed[count] += 1
-        count = 0
+        count = 0        
+        
+        
+        for member in labelValuesOpened:
+            if member != 0:
+                print("Between opened issues, {} ({}) label is used {} times.".format(labelName[count],labelColor[count],labelValuesOpened[count]))
+            count += 1
+
+
+
         for member in labelValuesClosed:
             if member != 0:
                 print("Between closed issues, {} ({}) label is used {} times.".format(labelName[count],labelColor[count],labelValuesClosed[count]))
             count += 1
 
+    def get_label(self,repo):
+        labelName = []
+            labelCount = 0
+
+        for issue in total_issues:
+            total_labels = issue.get_labels()
+            if(len(total_labels)):
+                        labelCount += 1
+                
+        
+        totalIssues = len(total_issues)
+        
+        print("Total issues {}, labels are used {} times / Labels not used {} times.".format(totalIssues,labelCount,totalIssues-labelCount))
+
+        control = totalIssues/2
+        if labelCount >= control:
+            print("Labels are important for this repository.")
+        else:
+            print("Labels are NOT important for this repository.")
 
     def get_issue_creators(self,repo):
         #It gives who opened and closed issues and comprasion with contributers.
@@ -1537,7 +1560,8 @@ def get_milestone_metrics(repo):
 
         
 #It checks repo labels generally, and then determines which labels are used opened and closed issues seperately. 
-def get_label(repo):
+#Deneme amaçlı get_label2 yazıldı asıl adı get_label olacak
+def get_label2(repo):
   labelName = []
   labelColor = []
   labelValuesOpened = []
@@ -1576,6 +1600,27 @@ def get_label(repo):
       if member != 0:
           print("Between closed issues, {} ({}) label is used {} times.".format(labelName[count],labelColor[count],labelValuesClosed[count]))
       count += 1
+
+def get_label(self,repo):
+    labelName = []
+    labelCount = 0
+
+    for issue in total_issues:
+        total_labels = issue.get_labels()
+        if(len(total_labels)):
+            labelCount += 1
+            
+    
+    totalIssues = len(total_issues)
+    
+    print("Total issues {}, labels are used {} times / Labels not used {} times.".format(totalIssues,labelCount,totalIssues-labelCount))
+
+    control = totalIssues/2
+    if labelCount >= control:
+        print("Labels are important for this repository.")
+    else:
+        print("Labels are NOT important for this repository.")
+
 
 
 def get_issue_creators(repo):

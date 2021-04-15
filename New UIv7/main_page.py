@@ -253,10 +253,16 @@ class Ui_Dialog(object):
         open_issues = repo.get_issues(state='open')
         close_issues = repo.get_issues(state='closed')
         #total open issues and closed issues
-        temp =[]
+        """temp =[]
         temp.append(open_issues)
         temp.append(close_issues)
-        total_issues = temp
+        total_issues = temp """
+
+        for issue in open_issues:
+            total_issues.append(issue)
+
+        for issue in close_issues:
+            total_issues.append(issue)
         # Issue_list.append_open_issue(open_issues)
         # Issue_list.append_close_issue(close_issues)
         temp2=[]
@@ -299,7 +305,7 @@ class Ui_Dialog(object):
         orientation='landscape', papertype='a10',
         transparent=False, pad_inches=0.5)
         """
-        plt.savefig('system_files/fig.png', dpi=300, bbox_inches='tight', )
+        #plt.savefig('system_files/fig.png', dpi=300, bbox_inches='tight', )
 
         """  ["Distrubution of issues on contributors", "Number of label types", "Label usage frequency",
              "Total amount of contributors", "Total number of assignees on spesific Repo",
@@ -499,16 +505,15 @@ class Ui_Dialog(object):
 
     def get_label(self,repo):
         labelName = []
-            labelCount = 0
-
+        labelCount = 0
+        print("Total issues: ",total_issues)
         for issue in total_issues:
             total_labels = issue.get_labels()
-            if(len(total_labels)):
-                        labelCount += 1
+            if(total_labels.totalCount):
+                labelCount += 1
                 
         
         totalIssues = len(total_issues)
-        
         print("Total issues {}, labels are used {} times / Labels not used {} times.".format(totalIssues,labelCount,totalIssues-labelCount))
 
         control = totalIssues/2
@@ -1611,7 +1616,7 @@ def get_label(self,repo):
             labelCount += 1
             
     
-    totalIssues = len(total_issues)
+    totalIssues = total_issues.totalCount
     
     print("Total issues {}, labels are used {} times / Labels not used {} times.".format(totalIssues,labelCount,totalIssues-labelCount))
 

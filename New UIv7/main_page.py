@@ -127,6 +127,8 @@ class Ui_Dialog(object):
             self.Set_Url()
             self.url = self.parse_url()
             self.repo = self.get_repo()
+            self.save_repo()
+            self.use_repo()
             self.Set_Dates()
             self.extract_data()
             self.Selected_extract()
@@ -231,6 +233,19 @@ class Ui_Dialog(object):
         print(repo_url)
         return repo_url
     
+    def save_repo(self):
+        with open('repo.pkl', 'wb') as output:
+            pickle.dump(self.repo, output, pickle.HIGHEST_PROTOCOL)
+
+
+    def use_repo(self):
+        with open('repo.pkl', 'rb') as config_dictionary_file:
+ 
+            # Step 3
+            repo = pickle.load(config_dictionary_file)
+        self.repo = repo    
+
+
     def get_repo(self):
         #creating a GitHub object
         github = Github()
@@ -600,6 +615,8 @@ class Ui_Dialog(object):
         self.Set_Url()
         self.url = self.parse_url()
         self.repo = self.get_repo()
+        self.save_repo()
+        self.use_repo()
         self.Set_Dates()
         self.extract_data()
         self.export_csv()
@@ -1404,6 +1421,7 @@ class Ui_Dialog(object):
         self.repo = None
 
         self.url=""
+
 
         #self.listWidget_Issue.addItems(main_list)
 

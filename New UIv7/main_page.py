@@ -16,7 +16,7 @@ import csv
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from result_page import second_page_dialog
-
+import pickle
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from result_page import second_page_dialog

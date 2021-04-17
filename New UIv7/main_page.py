@@ -16,7 +16,6 @@ import csv
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from result_page import second_page_dialog
-import pickle
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from result_page import second_page_dialog
@@ -234,15 +233,12 @@ class Ui_Dialog(object):
     def get_repo(self):
         #creating a GitHub object
         github = Github()
-        #repo = github.get_repo("maidis/mythes-tr")
         
         #taking repository data from Github, need to enter 
         #repository owner/repository name
-        #repo = github.get_repo("aapatre/Automatic-Udemy-Course-Enroller-GET-PAID-UDEMY-COURSES-for-FREE")
-        
-        #repo = github.get_repo("iperov/DeepFaceLab")
-        #repo = github.get_repo("commaai/openpilot")
+
         repo = github.get_repo(self.url)
+        
         return repo
 
 
@@ -503,6 +499,7 @@ class Ui_Dialog(object):
                 print("Between closed issues, {} ({}) label is used {} times.".format(labelName[count],labelColor[count],labelValuesClosed[count]))
             count += 1
 
+    #Question 1
     def get_label(self,repo):
         labelName = []
         labelCount = 0
@@ -521,6 +518,28 @@ class Ui_Dialog(object):
             print("Labels are important for this repository.")
         else:
             print("Labels are NOT important for this repository.")
+
+    def get_label3(self,repo):
+        control = 0
+        defaultLableSet = ["bug", "documentation", "duplicate", "enhancement", "good first issue", "help wanted", "invalid", "question", "wontfix"]
+        labelName = []
+
+
+        for label in repo.get_labels():
+            labelName.append(label.name)
+
+        for tempLabel in labelName:
+            if tempLabel not in defaultLableSet:
+                control = control + 1
+
+        if control > 0:
+            print("Default set of labels is NOT sufficient for issue management")
+        else:
+            print("Default set of labels is sufficient for issue management")
+            
+
+
+    
 
     def get_issue_creators(self,repo):
         #It gives who opened and closed issues and comprasion with contributers.
@@ -594,6 +613,7 @@ class Ui_Dialog(object):
         self.get_issue_metrics(self.repo,self.s_date,self.e_date)
         self.get_milestone_metrics(self.repo)
         self.get_label(self.repo)
+        self.get_label3(self.repo)
         self.get_issue_creators(self.repo)
 
     def Extract_Data_Button(self):
